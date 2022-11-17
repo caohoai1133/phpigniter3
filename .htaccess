@@ -1,0 +1,6 @@
+RewriteEngine on
+
+php_flag apc.cache_by_default Off
+php_value memory_limit 2048M
+RewriteCond $1 !^(index\.php|css|js|images|robots\.txt)
+RewriteRule ^(.*)$ index.php/$1 [L]
