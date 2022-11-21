@@ -8,11 +8,5 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('login.php');
 	}
-	public function loginIG(){
-
-  		$username = $this->input->post('user_name_lg');
-    	$pass = $this->input->post('passlg');
-       	$this -> load -> model('User_model');
-	   	$this -> User_model-> login($username,$pass);
-    }
+	
 }

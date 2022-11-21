@@ -19,12 +19,21 @@ class Mycontroller extends CI_Controller
 		$this->load->model('User_model');
 		$result = $this->User_model->login($username, $pass);
 		if ($result) {
-			// echo "<script type='text/javascript'>alert('đăng nhập thành công!');</script>";
-			$this->load->view("dashboard.php");
+			if(isset($_COOKIE['errorlogin'])){
+				unset($_COOKIE['errorlogin']);
+			}
+			session_start();
+			header("location:/IGlogin/Dashboard/dashboard");
 			setcookie("username", $username);
 			setcookie('password', md5($pass));
+			
+			$_SESSION["username"]= $username;
+			$_SESSION["login_time_stamp"] = time(); 
 		} else {
-			echo "<script type='text/javascript'>alert('đăng nhập thất bại!');</script>";
+			
+			setcookie("errorlogin", "Sai tên đăng nhập hoặc mật khẩu!");
+			header("location:/IGlogin/Mycontroller/viewlogin");
+			
 		}
 	}
 	public function viewregister()
@@ -42,14 +51,19 @@ class Mycontroller extends CI_Controller
 			$this->load->model('User_model');
 			$checkus = $this->User_model->checkusername($usernamerg);
 			if ($checkus) {
-				echo "<script type='text/javascript'>alert('tên đăng nhập đã tồn tại');</script>";
+				setcookie("errorregister", "tên đăng nhập đã tồn tại");
+				
 				
 			} else {
 				$this->User_model->register($usernamerg, $passrg, $fullname);
-				echo "<script type='text/javascript'>alert('tạo tài khoảng thành công!');</script>";
+				// echo "<script type='text/javascript'>alert('tạo tài khoảng thành công!');</script>";
+				setcookie("successregister","tạo tài khoảng thành công!");
+				header("location:/IGlogin/Mycontroller/viewlogin");
 			}
 		} else {
-			echo "<script type='text/javascript'>alert('Nhập lại mật khẩu không trùng khớp!');</script>";
+			setcookie("errorregister", "Nhập lại mật khẩu không trùng khớp!");
+			
 		}
 	}
+	
 }

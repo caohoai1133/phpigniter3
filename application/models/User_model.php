@@ -22,9 +22,15 @@ class User_model extends CI_Model{
         
 
     }
-    public function register($usernamerg,$passrg,$passrg_again){
-        $sql="insert into user (username,password,fullname) values ($usernamerg,$passrg,$passrg_again)";
-        $this -> db ->query($sql);
+    public function register($usernamerg,$passrg,$fullname){
+        // $sql="insert into user (username,password,fullname) values ($usernamerg,$passrg,$fullname)";
+        // $this -> db ->query($sql);
+        $data = array(
+            "username"=>$usernamerg,
+            "password"=>$passrg,
+            "fullname"=>$fullname
+        );
+        $this -> db ->insert("user",$data);
     }
     public function checkusername($usernamerg){
          
@@ -38,5 +44,32 @@ class User_model extends CI_Model{
             return FALSE;
             
         }
+    }
+    public function checkpass( $username,$oldpass){
+        $this ->db -> select('username,password');
+        $this -> db ->from('user');
+        $this -> db-> where('username',$username);
+        $this -> db-> where('password',$oldpass);
+        $query = $this ->db ->get();
+        if($query->num_rows()==1){
+            return $query->num_rows() ; 
+        }else{   
+            return FALSE;
+            
+        }
+
+    }
+    public function changepass($username,$oldpass,$newpass){
+        $data=['password'=>$newpass];
+       $this -> db -> where("username",$username);
+       $this -> db -> where("password",$oldpass);
+       $this ->db ->update("user",$data);
+        // $query = $this ->db ->get();
+        // if($query->num_rows()==1){
+        //     return $query->num_rows() ; 
+        // }else{   
+        //     return FALSE;
+            
+        // }
     }
 }

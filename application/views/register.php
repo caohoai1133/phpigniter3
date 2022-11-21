@@ -81,8 +81,19 @@
 </head>
 
 <body>
+<?php
+        if (isset($_COOKIE["errorregister"])) {
+        ?>
 
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> <?php echo $_COOKIE["errorregister"]; ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+
+        <?php } ?>
     <form action="register" method="post">
+    
     <p>PHP CodeIgniter 3</p>
 
         <div class="register_form">
