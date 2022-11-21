@@ -4,9 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Dashboard extends CI_Controller {
 
 	
-	public function dashboard()
+	public function dashboard($page="dashboard")
 	{
-		$this->load->view('dashboard.php');
+		
+		if(!file_exists("application/views/teamplate/".$page.".php")){
+			echo "Sorry, file does not exist";
+		}
+		else{
+			$data['title']=$page;
+			$this->load->view('dashboard.php',$page);
+			$this ->load-> view('menu.php',$data);
+			// $this->load->view("teamplate/".$page.".php");
+		}
 	}
 	
 	public function changepass(){

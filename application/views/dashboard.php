@@ -115,9 +115,7 @@
 
     </div>
     <div>
-    <?php 
-    $this ->load-> view('menu.php')
-    ?>
+  
     </div>
 </body>
 
